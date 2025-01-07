@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "aColor",
+  title: "mColor",
   description: "Created by Tin",
 };
 
