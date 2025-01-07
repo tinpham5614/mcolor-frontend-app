@@ -1,0 +1,96 @@
+.info-container {
+  text-align: center;
+  margin: 20px 10px;
+  padding: 10px;
+  background-color: #e8e8e8;
+  border-radius: 10px;
+  display: inline-block;
+  color: #333;
+}
+
+/* Feedback Message */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.feedback {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 15px 0;
+}
+
+.feedback.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.shapes-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem;
+  min-width: 60rem;
+  max-width: 60rem;
+}
+
+.shapes-container-random {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem;
+  cursor: pointer;
+  min-width: 60rem;
+  max-width: 60rem;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.timer {
+  display: flex;
+  font-size: 1.4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.button-container button {
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
