@@ -150,6 +150,8 @@ export default function Home() {
         </div>
       </div>
 
+      <Feedback feedback={`Level: ${level}`} />
+
       {!isReady ? (
         <div className="shapes-container">
           {combinations.map((item, index) => (
@@ -174,7 +176,7 @@ export default function Home() {
         </div>
       )}
 
-      <div className="level-info">Level: {level}</div>
+      <Feedback feedback={feedback} />
 
       <div className="shapes-container-random">
         {playerSequence.map((item, index) => (
@@ -182,11 +184,9 @@ export default function Home() {
         ))}
 
         {playerSequence.length !== 0 && (
-          <button onClick={handleClearAnswer}>⌫</button>
+          <button onClick={handleClearAnswer}>⌫ Delete</button>
         )}
       </div>
-
-      <Feedback feedback={feedback} />
 
       <dialog open={isOpen} className="dialog">
         <p>Quick guide:</p>
