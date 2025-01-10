@@ -191,9 +191,11 @@ export default function Home() {
       <dialog open={isOpen} className="dialog">
         <p>Quick guide:</p>
         <form method="dialog">
-          <p>1. Click &quot;Start&quot; button to start the game</p>
+          <p>1. Click the &quot;Start&quot; button to start the game</p>
           <p>2. Click on any shapes to shuffle</p>
-          <p>3. Select shapes in correct order to move on the next level</p>
+          <p>
+            3. Select shapes in the correct order to move on to the next level
+          </p>
 
           <button>OK</button>
         </form>
