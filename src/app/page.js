@@ -141,12 +141,15 @@ export default function Home() {
           <h4>
             Timer: {minutes}m : {seconds}s
           </h4>
+          <p>{isRunning ? "Playing..." : "Not playing"}</p>
         </div>
 
         <div className="button-container">
-          <button onClick={handleStart}>Start</button>
-          <button onClick={pause}>Pause</button>
-          <button onClick={handleReset}>Reset</button>
+          <button onClick={handleStart} disabled={true ? isRunning : false}>
+            ▶︎ Start
+          </button>
+          <button onClick={pause}>⏸︎ Pause</button>
+          <button onClick={handleReset}>↺ Reset</button>
         </div>
       </div>
 

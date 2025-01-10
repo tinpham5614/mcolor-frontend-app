@@ -74,9 +74,10 @@
 }
 
 .shapes-container-random button {
-  padding: 0.5rem 0.7rem;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   cursor: pointer;
+  border: none;
+  border-radius: 16px;
 }
 
 h1 {
@@ -110,7 +111,7 @@ h1 {
   padding: 0.5rem 2rem;
   font-size: 1.2rem;
   cursor: pointer;
-  background-color: rgb(24, 160, 145);
+  background-color: #1865a0;
   border: none;
   border-radius: 16px;
   color: #e8e8e8;
