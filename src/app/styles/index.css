@@ -1,11 +1,16 @@
 .info-container {
-  text-align: center;
-  margin: 20px 10px;
-  padding: 10px;
-  background-color: #e8e8e8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #333333;
   border-radius: 10px;
-  display: inline-block;
-  color: #333;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 80%;
+  max-width: 900px;
 }
 
 /* Feedback Message */
@@ -49,6 +54,12 @@
   max-width: 60rem;
 }
 
+.shapes-container button {
+  padding: 0.5rem 2rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 .shapes-container-random {
   display: flex;
   flex-wrap: wrap;
@@ -60,6 +71,12 @@
   cursor: pointer;
   min-width: 60rem;
   max-width: 60rem;
+}
+
+.shapes-container-random button {
+  padding: 0.5rem 0.7rem;
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 h1 {
@@ -92,5 +109,21 @@ h1 {
 .button-container button {
   padding: 0.5rem 2rem;
   font-size: 1.2rem;
+  cursor: pointer;
+  background-color: rgb(24, 160, 145);
+  border: none;
+  border-radius: 16px;
+  color: #e8e8e8;
+}
+
+.dialog {
+  border-radius: 16px;
+  border: none;
+  background-color: #e8e8e8;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
   cursor: pointer;
 }

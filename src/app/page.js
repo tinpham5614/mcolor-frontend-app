@@ -1,16 +1,15 @@
 "use client";
-import React, { useReducer, useEffect, useMemo } from "react";
+import React, { useState, useReducer, useEffect, useMemo } from "react";
 import Shape from "./components/Shape";
 import generateRandomCombinations from "./utils/generateRandomCombinations";
 import "@/app/styles/index.css";
 import { useStopwatch } from "react-timer-hook";
 import Feedback from "./components/Feedback";
-
-const BASE_TIME = 5;
+import fisherYatesShuffle from "./utils/fisherYatesShuffle";
 
 const initialState = {
   level: 1,
-  timeLeft: BASE_TIME,
+  isReady: false,
   combinations: [],
   randomCombinations: [],
   playerSequence: [],
@@ -34,7 +33,7 @@ const gameReducer = (state, action) => {
         ...state,
         level: state.level + 1,
         highestScore: Math.max(state.highestScore, state.level + 1),
-        timeLeft: BASE_TIME,
+        isReady: false,
         feedback: "Correct! 🎉",
         playerSequence: [],
       };
@@ -42,13 +41,13 @@ const gameReducer = (state, action) => {
       return {
         ...state,
         level: 1,
-        timeLeft: BASE_TIME,
+        isReady: false,
         combinations: action.payload,
-        feedback: "Incorrect! 🤔",
+        feedback: "Incorrect! 😕",
         playerSequence: [],
       };
-    case "SET_TIME_LEFT":
-      return { ...state, timeLeft: action.payload };
+    case "SET_READY":
+      return { ...state, isReady: action.payload };
     case "RESET_GAME":
       return { ...initialState, combinations: action.payload };
     default:
@@ -60,7 +59,7 @@ export default function Home() {
   const [state, dispatch] = useReducer(gameReducer, initialState);
   const {
     level,
-    timeLeft,
+    isReady,
     combinations,
     randomCombinations,
     playerSequence,
@@ -72,35 +71,32 @@ export default function Home() {
     autoStart: false,
   });
 
+  const [isOpen, setIsOpen] = useState(true);
+
   useEffect(() => {
     const newCombinations = generateRandomCombinations(level + 1);
     dispatch({ type: "SET_COMBINATIONS", payload: newCombinations });
-  }, [level]);
+  }, [level, setIsOpen]);
 
-  // Timer Effect
-  useEffect(() => {
+  // Set Ready
+  const handleReadyClick = () => {
     if (isRunning) {
-      const timer = setTimeout(() => {
-        dispatch({ type: "SET_TIME_LEFT", payload: timeLeft - 1 });
-      }, 1000);
-
-      return () => clearTimeout(timer);
+      dispatch({ type: "SET_READY", payload: true });
     }
-  }, [timeLeft, isRunning]);
-
+  };
   const shuffledCombinations = useMemo(() => {
-    return combinations
-      .map((a) => [Math.random(), a])
-      .sort((a, b) => a[0] - b[0])
-      .map((a) => a[1]);
+    return fisherYatesShuffle(combinations);
   }, [combinations]);
 
   useEffect(() => {
-    dispatch({
-      type: "SET_RANDOM_COMBINATIONS",
-      payload: shuffledCombinations,
-    });
-  }, [shuffledCombinations]);
+    if (isReady) {
+      dispatch({
+        type: "SET_RANDOM_COMBINATIONS",
+        payload: shuffledCombinations,
+      });
+      setIsOpen(false);
+    }
+  }, [isReady, shuffledCombinations]);
 
   const handleShapeClick = (shape, color) => {
     const updatedSequence = [...playerSequence, { shape, color }];
@@ -128,27 +124,41 @@ export default function Home() {
   };
 
   const handleClearAnswer = () => {
-    const updatedSequence = [];
+    const updatedSequence = [...playerSequence.slice(0, -1)];
     dispatch({ type: "SET_PLAYER_SEQUENCE", payload: updatedSequence });
+  };
+
+  const handleStart = () => {
+    start();
+    setIsOpen(false);
   };
 
   return (
     <div>
-      <h1>mColor</h1>
-
       <div className="info-container">
-        <h4>Highest Level: {highestScore}</h4>
-        <h4>
-          Timer: {minutes}m : {seconds}s
-        </h4>
+        <div>
+          <h4>Highest Level: {highestScore}</h4>
+          <h4>
+            Timer: {minutes}m : {seconds}s
+          </h4>
+        </div>
+
+        <div className="button-container">
+          <button onClick={handleStart}>Start</button>
+          <button onClick={pause}>Pause</button>
+          <button onClick={handleReset}>Reset</button>
+        </div>
       </div>
 
-      <Feedback feedback={feedback} />
-
-      {timeLeft > 0 ? (
+      {!isReady ? (
         <div className="shapes-container">
           {combinations.map((item, index) => (
-            <Shape key={index} shape={item.shape} color={item.color} />
+            <Shape
+              key={index}
+              shape={item.shape}
+              color={item.color}
+              onClick={handleReadyClick}
+            />
           ))}
         </div>
       ) : (
@@ -164,37 +174,30 @@ export default function Home() {
         </div>
       )}
 
-      <div className="timer">
-        <p>{timeLeft > 0 && `Answer in ${timeLeft}`}</p>
-      </div>
-      <div
-        className="timer-bar"
-        style={{
-          width: `${(timeLeft / BASE_TIME) * 100}%`,
-          height: "10px",
-          backgroundColor: "green",
-          borderRadius: "50px",
-        }}
-      ></div>
-
       <div className="level-info">Level: {level}</div>
 
       <div className="shapes-container-random">
         {playerSequence.map((item, index) => (
           <Shape key={index} shape={item.shape} color={item.color} />
         ))}
-        <div>
-          {playerSequence.length !== 0 && (
-            <button onClick={handleClearAnswer}>Clear</button>
-          )}
-        </div>
+
+        {playerSequence.length !== 0 && (
+          <button onClick={handleClearAnswer}>⌫</button>
+        )}
       </div>
 
-      <div className="button-container">
-        <button onClick={start}>Start</button>
-        <button onClick={pause}>Pause</button>
-        <button onClick={handleReset}>Reset</button>
-      </div>
+      <Feedback feedback={feedback} />
+
+      <dialog open={isOpen} className="dialog">
+        <p>Quick guide:</p>
+        <form method="dialog">
+          <p>1. Click &quot;Start&quot; button to start the game</p>
+          <p>2. Click on any shapes to shuffle</p>
+          <p>3. Select shapes in correct order to move on the next level</p>
+
+          <button>OK</button>
+        </form>
+      </dialog>
     </div>
   );
 }

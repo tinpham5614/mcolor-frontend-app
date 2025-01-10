@@ -6,8 +6,8 @@ const Shape = ({ shape, color, onClick }) => {
       <div
         style={{
           backgroundColor: color,
-          width: "100px",
-          height: "100px",
+          width: "75px",
+          height: "75px",
           borderRadius: "50%",
         }}
         onClick={onClick}
@@ -20,8 +20,8 @@ const Shape = ({ shape, color, onClick }) => {
       <div
         style={{
           backgroundColor: color,
-          width: "100px",
-          height: "100px",
+          width: "75px",
+          height: "75px",
         }}
         onClick={onClick}
       ></div>
@@ -34,9 +34,9 @@ const Shape = ({ shape, color, onClick }) => {
         style={{
           width: 0,
           height: 0,
-          borderLeft: "50px solid transparent",
-          borderRight: "50px solid transparent",
-          borderBottom: `100px solid ${color}`,
+          borderLeft: "40px solid transparent",
+          borderRight: "40px solid transparent",
+          borderBottom: `75px solid ${color}`,
         }}
         onClick={onClick}
       ></div>
@@ -48,8 +48,8 @@ const Shape = ({ shape, color, onClick }) => {
       <div
         style={{
           backgroundColor: color,
-          width: "150px",
-          height: "75px",
+          width: "120px",
+          height: "60px",
         }}
         onClick={onClick}
       ></div>
